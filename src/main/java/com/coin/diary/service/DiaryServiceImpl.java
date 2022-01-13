@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.coin.diary.EntityManagerUtils;
@@ -26,7 +27,8 @@ public class DiaryServiceImpl implements DiaryService{
 		return diaryRepository.findAll();
 		
 	}
-
+	
+	@Cacheable(value="diaryNo", key="#diaryNo")
 	@Override
 	public Diary find(Integer diaryNo) {
 		// TODO Auto-generated method stub

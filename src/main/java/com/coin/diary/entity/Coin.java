@@ -1,5 +1,7 @@
 package com.coin.diary.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -16,7 +18,7 @@ import lombok.ToString;
 @Setter
 @IdClass(CoinId.class)
 @ToString
-public class Coin {
+public class Coin implements Serializable{
 	
 	@Id
 	@Column(name="COIN_CODE")

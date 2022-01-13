@@ -3,6 +3,7 @@ package com.coin.diary.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +31,7 @@ public class DiaryController {
 	@Autowired
 	private MarketService marketService;
 		
+	
 	@RequestMapping("/")
 	public String diary(@RequestParam("diaryNo") @Nullable Integer diaryNo, Model model) {
 		if(diaryNo != null) {
@@ -49,6 +51,7 @@ public class DiaryController {
 		ra.addAttribute("writeDt", diary.getWriteDt());
 		return "redirect:/diaryList";
 	}
+	
 	
 	@RequestMapping(value="diaryList", method = {RequestMethod.GET})
 	public String getDiaryList(@RequestParam("writeDt") @Nullable String writeDt, Model model) {  

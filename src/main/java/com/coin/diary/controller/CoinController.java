@@ -22,6 +22,7 @@ public class CoinController {
 	@Autowired
 	private CoinService coinService;
 	
+	
 	@RequestMapping("/coin")
 	public String diary(@RequestParam("coinId") @Nullable CoinId coinId, Model model) {
 		List<Coin> coinList = coinService.findAll();

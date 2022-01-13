@@ -1,5 +1,7 @@
 package com.coin.diary.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,7 +21,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Diary {
+public class Diary implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
