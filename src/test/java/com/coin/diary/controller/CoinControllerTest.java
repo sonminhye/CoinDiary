@@ -35,9 +35,6 @@ public class CoinControllerTest {
 	@MockBean
 	private CoinService service;
 	
-	@MockBean
-	private Model model;
-	
 	@Autowired
 	ObjectMapper obj;
 	
