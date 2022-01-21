@@ -18,7 +18,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.ui.Model;
 
 import com.coin.diary.entity.Coin;
 import com.coin.diary.service.CoinService;
@@ -39,6 +38,20 @@ public class CoinControllerTest {
 	ObjectMapper obj;
 	
 	@Test
+	@DisplayName("코인 가져오기 실패 테스트")
+	public void findCoinListFail() throws Exception {
+		ResultActions result = mockMvc.perform(get("/coin")
+				   .contentType(MediaType.APPLICATION_JSON)
+				   .accept(MediaType.APPLICATION_JSON)
+				   .param("coinId", "1000"));
+	
+		result.andDo(print())
+		.andExpect(status().is5xxServerError())
+		.andExpect(handler().handlerType(CoinController.class))
+		.andExpect(handler().methodName("diary"));
+	}
+	
+	@Test
 	@DisplayName("코인 가져오기 테스트")
 	public void findCoinList() throws Exception {
 		
@@ -55,13 +68,36 @@ public class CoinControllerTest {
 	}
 	
 	@Test
+	@DisplayName("코인 등록 실패 테스트")
+	public void addCoinListFailTest() throws JsonProcessingException, Exception {
+		
+		Coin coin = Coin.builder().marketCode("UPBIT")
+				  .coinCode("ONT")
+				  .coinName("온톨로지")
+				  .build();
+		
+		String jsonObj = obj.writeValueAsString(coin);
+		
+		ResultActions result = mockMvc.perform(post("/saveCoin")
+				   .contentType(MediaType.APPLICATION_JSON)
+				   .accept(MediaType.APPLICATION_JSON)
+				   .content(jsonObj));
+		
+		
+		result.andDo(print())
+			.andExpect(handler().handlerType(CoinController.class))
+			.andExpect(handler().methodName("coinSave"));
+		
+	}
+	
+	@Test
 	@DisplayName("코인 등록 테스트")
 	public void addCoinListTest() throws JsonProcessingException, Exception {
 		
-		Coin coin = new Coin();
-		coin.setMarketCode("UPBIT");
-		coin.setCoinCode("ONT");
-		coin.setCoinName("온톨로지");
+		Coin coin = Coin.builder().marketCode("UPBIT")
+								  .coinCode("ONT")
+								  .coinName("온톨로지")
+								  .build();
 		
 		String jsonObj = obj.writeValueAsString(coin);
 		
