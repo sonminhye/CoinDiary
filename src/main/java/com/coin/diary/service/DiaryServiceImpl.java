@@ -16,6 +16,7 @@ import com.coin.diary.repository.DiaryRepository;
 @Service
 public class DiaryServiceImpl implements DiaryService{
 
+	
 	//EntityManager em = EntityManagerUtils.getInstance().createEntityManager();
 	
 	@Autowired

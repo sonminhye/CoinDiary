@@ -6,7 +6,7 @@
 <%@ include file="commonHeader.jsp" %>
 <head>
 <style>
-.form {
+.form, table {
 	margin:10px;
 }
 </style>
@@ -14,7 +14,7 @@
 <title>코인등록</title>
 <script>
 $(document).ready(function(){
-    $('#submitBtn').click(function(event) {
+    $('#btnSubmit').click(function(event) {
     	
         var formData= {
             'coinCode'  : $('input[name=coinCode]').val(),
@@ -36,11 +36,32 @@ $(document).ready(function(){
  
         event.preventDefault();
     });
+    
+	$('#btnApi').click(function(event) {
+    	
+        $.ajax({
+            type        : 'GET',
+            url         : '/getMarketInfos',
+            contentType : 'application/json; charset=utf-8',
+            dataType    : 'text',
+            success     : function(data){
+            	alert("연동완료하였습니다.");
+            	$(location).attr("href", "/coin");
+            }
+        })
+ 
+        event.preventDefault();
+    });
+    
+    
 });
 </script>
 </head>
 <%@ include file="navbar.jsp" %>
 <body>
+<div>
+
+</div>
 <div style="height:50%" class="table">
 	<table class="table table-hover">
 		<tr>
@@ -58,6 +79,7 @@ $(document).ready(function(){
 	</table>
 </div>
 <div>
+	
 	<form id="coinForm" method="POST" action="/saveCoin" class="form">
 	  <div class="form-group">
 	    <label for="input1">마켓</label>
@@ -74,7 +96,8 @@ $(document).ready(function(){
 	    <label for="input3">코인명</label>
 	    <input type="text" class="form-control" id="coinName" name="coinName" placeholder="">
 	  </div>
-	 <input type="button" id ="submitBtn" class="btn btn-primary my-1" value="등록"/>
+	 <input type="button" id ="btnSubmit" class="btn btn-primary my-1" value="등록"/>
+	 <button id="btnApi" class="btn btn-secondary my-2">코인목록 연동</button>
 	</form>
 </div>
 </body>

@@ -22,6 +22,8 @@ import com.coin.diary.service.MarketService;
 @Controller
 public class DiaryController {
 	
+	
+	
 	@Autowired
 	private DiaryService diaryService;
 	
@@ -34,6 +36,7 @@ public class DiaryController {
 	
 	@RequestMapping("/")
 	public String diary(@RequestParam("diaryNo") @Nullable Integer diaryNo, Model model) {
+		
 		if(diaryNo != null) {
 			Diary diary = diaryService.find(diaryNo);
 			model.addAttribute("diary", diary);
@@ -43,6 +46,7 @@ public class DiaryController {
 		model.addAttribute("coinList", coinService.findAll()); // 코인조회
 		model.addAttribute("marketList", marketService.findAll()); // 마켓 조회
 		return "diary";
+		
 	}
 	
 	@RequestMapping(value="saveDiary", method = {RequestMethod.POST})

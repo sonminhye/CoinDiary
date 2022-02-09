@@ -2,7 +2,9 @@ package com.coin.diary.controller;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.handler;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -15,7 +17,8 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -28,6 +31,7 @@ import com.coin.diary.entity.Diary;
 import com.coin.diary.service.CoinService;
 import com.coin.diary.service.DiaryService;
 import com.coin.diary.service.MarketService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 @WebMvcTest(DiaryController.class)
@@ -107,8 +111,44 @@ public class DiaryControllerTest {
 	}
 
 	@Test
-	public void testSavedDiary() {
-		fail("Not yet implemented");
+	@DisplayName("다이어리 저장실패")
+	public void testFailedSavedDiary() throws Exception {
+		
+		ResultActions result = mockMvc.perform(post("/saveDiary")
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON));
+		
+		result.andDo(print())
+			.andExpect(status().is4xxClientError())
+			.andExpect(handler().handlerType(DiaryController.class))
+			.andExpect(handler().methodName("savedDiary"));
+	}
+	
+	@Test
+	@DisplayName("다이어리 저장")
+	public void testSavedDiary() throws Exception {
+		
+		Diary diary = new Diary();
+		diary.setDiaryNo(1);
+		Coin coin = Coin.builder().marketCode("UPBIT")
+				  .coinCode("ONT")
+				  .coinName("온톨로지")
+				  .build();
+		diary.setCoin(coin);
+		
+		String str = new ObjectMapper().writeValueAsString(diary);
+		System.out.println(str);
+		
+		ResultActions result = mockMvc.perform(post("/saveDiary")
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON)
+				.content(str));
+		
+		result.andDo(print())
+			//.andExpect(redirectUrl("redirect:/diaryList"))
+			.andExpect(handler().handlerType(DiaryController.class))
+			.andExpect(handler().methodName("savedDiary"))
+			.andExpect(MockMvcResultMatchers.model().attributeExists("writeDt"));
 	}
 
 	@Test

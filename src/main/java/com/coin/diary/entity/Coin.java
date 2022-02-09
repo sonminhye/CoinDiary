@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -20,6 +21,8 @@ import lombok.ToString;
 @ToString
 public class Coin implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@Column(name="COIN_CODE")
 	private String coinCode;
@@ -30,5 +33,14 @@ public class Coin implements Serializable{
 	
 	@Column(name="COIN_NAME")
 	private String coinName;
+	
+	public Coin() {}
+	
+	@Builder
+	public Coin(String coinCode, String marketCode, String coinName) {
+		this.coinCode = coinCode;
+		this.marketCode = marketCode;
+		this.coinName = coinName;
+	}
 	
 }

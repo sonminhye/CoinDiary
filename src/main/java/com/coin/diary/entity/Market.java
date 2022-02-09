@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -31,4 +32,13 @@ public class Market {
 	
 	@Column(name="MARKET_NAME")
 	private String marketName;
+	
+	public Market() {}
+	
+	@Builder
+	public Market(String marketCode, String marketName) {
+		this.marketCode = marketCode;
+		this.marketName = marketName;
+	}
+	
 }

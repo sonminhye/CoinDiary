@@ -32,5 +32,11 @@ public class CoinServiceImpl implements CoinService{
 		coinRepository.save(coin);
 	}
 
+	@Override
+	public void saveAll(List<Coin> coinList) {
+		// TODO Auto-generated method stub
+		coinRepository.saveAll(coinList);
+	}
+
 	
 }
