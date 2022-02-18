@@ -32,6 +32,9 @@ $(document).ready(function() {
 	
 	$("#submitBtn").click(function(){
 		
+		var header = $("meta[name=_csrf_header]").attr("content");
+        var token = $("meta[name=_csrf]").attr("content");
+		
 		var formData = {
 				"diaryNo" : $("input[name=diaryNo]").val()
 			  , "writeDt" : $("input[name=writeDt]").val()
@@ -51,6 +54,9 @@ $(document).ready(function() {
             contentType : 'application/json; charset=utf-8',
             dataType    : 'text',
             data        : JSON.stringify(formData),
+            beforeSend: function (jqXHR, settings) {
+                jqXHR.setRequestHeader(header, token);
+     		},
             success     : function(data){
             	alert("등록되었습니다.");
             	$(location).attr("href", "/diaryList");

@@ -13,10 +13,11 @@ public class LoginFailureHandler implements AuthenticationFailureHandler{
 
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
-			AuthenticationException exception) throws IOException, ServletException {
+			AuthenticationException exception) {
 		// TODO Auto-generated method stub
+		
 		System.out.println("권한이 없대~~");
-		response.sendRedirect("/login");
+		exception.printStackTrace();
 	}
 
 }

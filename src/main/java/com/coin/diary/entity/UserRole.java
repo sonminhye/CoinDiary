@@ -19,8 +19,8 @@ import lombok.ToString;
 public class UserRole {
 	
 	@Id
-	@Column(name="USER_ID")
-	private String userId;
+	@Column(name="USER_NAME")
+	private String username;
 	
 	@Id
 	@Column(name="ROLE_CD")

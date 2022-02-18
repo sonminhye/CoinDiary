@@ -1,21 +1,17 @@
 package com.coin.diary;
 
-import java.io.IOException;
-import java.security.AuthProvider;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.coin.diary.security.CustomUserDetailsService;
 import com.coin.diary.security.LoginFailureHandler;
 import com.coin.diary.security.LoginSuccessHandler;
 
@@ -25,12 +21,12 @@ import com.coin.diary.security.LoginSuccessHandler;
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Autowired
-	private UserDetailsService userDetailsService;
+	private CustomUserDetailsService customUserDetailsService;
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) {
 		try {
-			auth.userDetailsService(userDetailsService);
+			auth.userDetailsService(customUserDetailsService).passwordEncoder(encoder());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -43,15 +39,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		 http.authorizeRequests() // 요청에 의해 보안검사 시작
 			.antMatchers("/login").permitAll()
 			.antMatchers("/signUp").permitAll()
-			.antMatchers("/saveUserInfo").permitAll()
-			.antMatchers("/").permitAll()
-			.anyRequest().authenticated()
-			.and().formLogin()
+			.antMatchers("/saveUserInfo").permitAll();
+		 
+		 http.formLogin()
 			.defaultSuccessUrl("/")
-			.usernameParameter("userId")
-			.passwordParameter("passWd")
+			.usernameParameter("username")
+			.passwordParameter("password")
 			.loginProcessingUrl("/loginProcess")
 			.successHandler(new LoginSuccessHandler())
-			.failureHandler(new LoginFailureHandler()); 
+			.failureHandler(new LoginFailureHandler())
+			.permitAll();
+		 
 	}
+	
+	@Bean
+    public PasswordEncoder encoder() {
+        return new BCryptPasswordEncoder();
+    }
 }

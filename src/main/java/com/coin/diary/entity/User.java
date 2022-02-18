@@ -23,12 +23,12 @@ import lombok.ToString;
 public class User {
 	
 	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name="USER_ID")
+	@JoinColumn(name="USER_NAME")
 	private Collection<UserRole> userRole;
 	
 	@Id
-	@Column(name="USER_ID")
-	private String userId;
+	@Column(name="USER_NAME")
+	private String username;
 	
 	@Column(name="PASSWORD")
 	private String password;
@@ -40,7 +40,7 @@ public class User {
 	
 	@Builder
 	public User(String userId, String password, String korNm) {
-		this.userId = userId;
+		this.username = username;
 		this.password = password;
 		this.korNm = korNm;
 	}

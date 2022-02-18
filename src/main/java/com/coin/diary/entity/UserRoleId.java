@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserRoleId implements Serializable{
 	
-	private String userId;
+	private String username;
 	private String roleCd;
 	
 }

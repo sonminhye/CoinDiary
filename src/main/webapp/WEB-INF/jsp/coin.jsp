@@ -16,6 +16,9 @@
 $(document).ready(function(){
     $('#btnSubmit').click(function(event) {
     	
+    	var header = $("meta[name=_csrf_header]").attr("content");
+        var token = $("meta[name=_csrf]").attr("content");
+         
         var formData= {
             'coinCode'  : $('input[name=coinCode]').val(),
             'marketCode' : $('select[name=marketCode]').val(),
@@ -28,6 +31,9 @@ $(document).ready(function(){
             contentType : 'application/json; charset=utf-8',
             dataType    : 'text',
             data        : JSON.stringify(formData),
+            beforeSend: function (jqXHR, settings) {
+                jqXHR.setRequestHeader(header, token);
+     		},
             success     : function(data){
             	alert("등록되었습니다.");
             	$(location).attr("href", "/coin");

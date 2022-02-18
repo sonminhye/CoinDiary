@@ -29,7 +29,7 @@ public class DiaryServiceImpl implements DiaryService{
 		
 	}
 	
-	@Cacheable(value="diaryNo", key="#diaryNo")
+	//@Cacheable(value="diaryNo", key="#diaryNo")
 	@Override
 	public Diary find(Integer diaryNo) {
 		// TODO Auto-generated method stub
