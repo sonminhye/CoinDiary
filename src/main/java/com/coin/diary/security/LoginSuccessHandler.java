@@ -18,5 +18,4 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
 		System.out.println("authentication :: " + authentication.getName());
 		response.sendRedirect("/");
 	}
-
 }

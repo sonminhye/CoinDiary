@@ -3,6 +3,7 @@ package com.coin.diary.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -14,6 +15,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@IdClass(UserRoleId.class)
 public class UserRole {
 	
 	@Id

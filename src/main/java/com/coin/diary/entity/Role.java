@@ -1,8 +1,13 @@
 package com.coin.diary.entity;
 
+import java.util.Collection;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Builder;
@@ -16,6 +21,10 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Role {
+	
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name="ROLE_CD")
+	private Collection<UserRole> userRole;
 	
 	@Id
 	@Column(name="ROLE_CD")

@@ -1,4 +1,4 @@
-package com.coin.diary.security;
+/* package com.coin.diary.security;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +25,9 @@ public class CustomUserDetailsService implements UserDetailsService{
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
 		Optional<User> user = userRepository.findById(username);
-		List<GrantedAuthority> roles = new ArrayList<>();
+		//List<GrantedAuthority> roles = new ArrayList<>();
 		
 		return null;
 	}
 
-}
+}*/

@@ -35,12 +35,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests() // 요청에 의해 보안검사 시작
+		 http.authorizeRequests() // 요청에 의해 보안검사 시작
 			.antMatchers("/login").permitAll()
+			.antMatchers("/signUp").permitAll()
+			.antMatchers("/saveUserInfo").permitAll()
+			.antMatchers("/").permitAll()
 			.anyRequest().authenticated()
 			.and().formLogin()
 			.defaultSuccessUrl("/")
@@ -48,6 +52,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.passwordParameter("passWd")
 			.loginProcessingUrl("/loginProcess")
 			.successHandler(new LoginSuccessHandler())
-			.failureHandler(new LoginFailureHandler());
+			.failureHandler(new LoginFailureHandler()); 
 	}
 }
