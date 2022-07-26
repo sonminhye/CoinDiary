@@ -45,7 +45,7 @@ public class DiaryController {
 		
 		model.addAttribute("coinList", coinService.findAll()); // 코인조회
 		model.addAttribute("marketList", marketService.findAll()); // 마켓 조회
-		return "diary";
+		return "thymeleaf/diary";
 		
 	}
 	
