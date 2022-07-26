@@ -7,6 +7,7 @@
 * JPA-Hibernate
 * H2Database
 * Upbit Open Api 연동
+* Thymeleaf
 
 ### 구현내용
 * 코인에 대한 평단가/매수금 등 정보 등록 및 수정
